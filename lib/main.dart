@@ -1,28 +1,21 @@
-return MaterialApp(
-  debugShowCheckedModeBanner: false,
-  title: 'Aurora: Track Wellness',
-  initialRoute: AppRoutes.login,
-  routes: AppRoutes.routes,
-  theme: ThemeData(
-    primaryColor: Colors.deepPurple,
-    scaffoldBackgroundColor: Colors.grey[100],
-    fontFamily: 'Roboto',
-    appBarTheme: AppBarTheme(
-      backgroundColor: Colors.deepPurple,
-      titleTextStyle: TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-        color: Colors.white,
+import 'package:flutter/material.dart';
+import 'routes/app_routes.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Aurora: Track Wellness',
+      initialRoute: AppRoutes.login,
+      routes: AppRoutes.routes,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
       ),
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.deepPurple,
-        foregroundColor: Colors.white,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ),
-    ),
-  ),
-);
+    );
+  }
+}
