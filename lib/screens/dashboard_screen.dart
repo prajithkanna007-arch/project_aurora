@@ -1,4 +1,7 @@
+import 'dart:ui_web' as ui; // ✅ for HtmlElementView
+import 'package:web/web.dart' as web; // ✅ for iframe
 import 'package:flutter/material.dart';
+import '../widgets/app_logo.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -10,6 +13,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String selectedDrawer = "notifications"; // default drawer
 
   @override
+  void _registerMapView() {
+  // Register only once
+  ui.platformViewRegistry.registerViewFactory(
+    'map-iframe',
+    (int viewId) {
+      final iframe = web.HTMLIFrameElement()
+        ..src = "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3683461.1882078954!2d68.11607292460369!3d20.59368407022151!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30635ff5b7c9583b%3A0x44c8b4a2c508d57e!2sIndia!5e0!3m2!1sen!2sin!4v1631741703931!5m2!1sen!2sin"
+ // your embed link
+        ..style.border = '0'
+        ..style.width = '100%'
+        ..style.height = '100%';
+
+      return iframe;
+    },
+  );
+}
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey, // ✅ Attach key to Scaffold
@@ -17,8 +38,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
-        title: Text("Dashboard",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        title: Row(
+          children: [
+            AppLogo(height: 35), // ✅ Added logo
+            SizedBox(width: 10),
+            Text("Dashboard",
+                style: TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
+          ],
+        ),
         actions: [
           Row(
             children: [
@@ -57,8 +85,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ? _buildRoverNotifications()
                 : _buildSensorNotifications(),
       ),
-
-      body: _buildDashboard(),
+      body:_buildMapCard(),
     );
   }
 
@@ -75,16 +102,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  // ✅ Dashboard Body
-  Widget _buildDashboard() {
-    return GridView.count(
-      crossAxisCount: 2,
-      padding: EdgeInsets.all(16),
-      children: [
-        _buildCard("Rover Map", Icons.map, Colors.blue),
-      ],
-    );
-  }
+
 
   // ✅ Notifications Drawer
   Widget _buildNotifications() {
@@ -171,21 +189,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   // ✅ Card Helper
-  Widget _buildCard(String title, IconData icon, Color color) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, size: 40, color: color),
-            SizedBox(height: 10),
-            Text(title,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          ],
-        ),
-      ),
-    );
-  }
+Widget _buildMapCard() {
+  _registerMapView();
+  return Center
+  (
+  child: Card(
+    elevation: 4,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    child: SizedBox(
+      height: 500,
+      width: 500,
+      child: HtmlElementView(viewType: 'map-iframe'),
+    ),
+  ),
+  );
+}
 }
