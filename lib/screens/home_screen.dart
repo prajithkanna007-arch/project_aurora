@@ -19,17 +19,9 @@ class _HomeScreenState extends State<HomeScreen> {
     SettingsScreen(),
   ];
 
-  final List<String> _titles = [
-    "Dashboard",
-    "Alerts",
-    "Reports",
-    "Settings",
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(_titles[_currentIndex])),
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,

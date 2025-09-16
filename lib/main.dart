@@ -13,9 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'Aurora: Track Wellness',
       initialRoute: AppRoutes.login,
       routes: AppRoutes.routes,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData.dark(),
     );
   }
 }

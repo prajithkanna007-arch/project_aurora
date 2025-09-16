@@ -16,10 +16,15 @@ class AlertsScreen extends StatelessWidget {
         itemCount: mockAlerts.length,
         itemBuilder: (context, index) {
           return Card(
+            color: Colors.white,
             margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child: ListTile(
-              leading: Icon(Icons.warning, color: Colors.red),
-              title: Text(mockAlerts[index]),
+              leading: Icon(Icons.warning, color: Colors.red,),
+              title: Text(mockAlerts[index],
+              style: TextStyle
+              (
+                color: Colors.black,
+              ))
             ),
           );
         },
